@@ -14,11 +14,11 @@ const HomeWikiProjectSelector = createReactClass({
   componentWillMount() {
     this.setState({
       id: uuid.v4(),
-      selectedOption: { value : this.props.course.home_wiki.project , label: this.props.course.home_wiki.project},
+      selectedOption: { value: this.props.course.home_wiki.project, label: this.props.course.home_wiki.project },
     });
   },
 
-  _handleChange(selectedOption){
+  _handleChange(selectedOption) {
     const course = this.props.course;
     const homeWikiProject = selectedOption.value;
     course.home_wiki.project = homeWikiProject;
@@ -27,20 +27,20 @@ const HomeWikiProjectSelector = createReactClass({
   },
 
   render() {
-    const options = JSON.parse(WikiProjects).map((project, index) => {
-     return {value: project, label: project}
+    const options = JSON.parse(WikiProjects).map((project) => {
+     return { value: project, label: project };
     });
     const selector = (
       <div className="form-group">
         <label htmlFor={this.state.id}>{I18n.t('courses.home_wiki_project')}:</label>
         <Select
-            id={this.state.id}
-            value={ this.state.selectedOption }
-            onChange={this._handleChange}
-            options={ options }
-            simpleValue
-            styles={selectStyles}
-          />
+          id={this.state.id}
+          value={this.state.selectedOption}
+          onChange={this._handleChange}
+          options={options}
+          simpleValue
+          styles={selectStyles}
+        />
       </div>
     );
 
