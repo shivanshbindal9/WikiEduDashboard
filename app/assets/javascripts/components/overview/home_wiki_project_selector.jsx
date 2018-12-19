@@ -1,7 +1,9 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 import uuid from 'uuid';
+import selectStyles from '../../styles/single_select';
 
 const HomeWikiProjectSelector = createReactClass({
   propTypes: {
@@ -11,7 +13,8 @@ const HomeWikiProjectSelector = createReactClass({
 
   componentWillMount() {
     this.setState({
-      id: uuid.v4()
+      id: uuid.v4(),
+      selectedOption: { value : this.props.course.home_wiki_project , label: this.props.course.home_wiki_project},
     });
   },
 
@@ -22,22 +25,29 @@ const HomeWikiProjectSelector = createReactClass({
     return this.props.updateCourse(course);
   },
 
+  handleChange(selectedOption){
+    const course = this.props.course;
+    const homeWikiProject = selectedOption.value;
+    course.home_wiki_project = homeWikiProject;
+    this.setState({ selectedOption });
+    return this.props.updateCourse(course);
+  },
+
   render() {
     const options = JSON.parse(WikiProjects).map((project, index) => {
-      return (<option value={project} key={index}>{project}</option>);
+     return {value: project, label: project}
     });
-
     const selector = (
       <div className="form-group">
         <label htmlFor={this.state.id}>{I18n.t('courses.home_wiki_project')}:</label>
-        <select
-          id={this.state.id}
-          name="home_wiki_project"
-          value={this.props.course.home_wiki.project}
-          onChange={this._handleChange}
-        >
-          {options}
-        </select>
+        <Select
+            id={this.state.id}
+            value={ this.state.selectedOption }
+            onChange={this.handleChange}
+            options={ options }
+            simpleValue
+            styles={selectStyles}
+          />
       </div>
     );
 
