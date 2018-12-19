@@ -14,21 +14,14 @@ const HomeWikiProjectSelector = createReactClass({
   componentWillMount() {
     this.setState({
       id: uuid.v4(),
-      selectedOption: { value : this.props.course.home_wiki_project , label: this.props.course.home_wiki_project},
+      selectedOption: { value : this.props.course.home_wiki.project , label: this.props.course.home_wiki.project},
     });
   },
 
-  _handleChange(e) {
-    const course = this.props.course;
-    const homeWikiProject = e.target.value;
-    course.home_wiki.project = homeWikiProject;
-    return this.props.updateCourse(course);
-  },
-
-  handleChange(selectedOption){
+  _handleChange(selectedOption){
     const course = this.props.course;
     const homeWikiProject = selectedOption.value;
-    course.home_wiki_project = homeWikiProject;
+    course.home_wiki.project = homeWikiProject;
     this.setState({ selectedOption });
     return this.props.updateCourse(course);
   },
@@ -43,7 +36,7 @@ const HomeWikiProjectSelector = createReactClass({
         <Select
             id={this.state.id}
             value={ this.state.selectedOption }
-            onChange={this.handleChange}
+            onChange={this._handleChange}
             options={ options }
             simpleValue
             styles={selectStyles}
